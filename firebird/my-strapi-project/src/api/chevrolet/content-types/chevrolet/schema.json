@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chevrolets",
+  "info": {
+    "singularName": "chevrolet",
+    "pluralName": "chevrolets",
+    "displayName": "Chevrolet",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "chevrolets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::chevrolet.chevrolet",
+      "mappedBy": "chevrolet"
+    },
+    "chevrolet": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chevrolet.chevrolet",
+      "inversedBy": "chevrolets"
+    }
+  }
+}

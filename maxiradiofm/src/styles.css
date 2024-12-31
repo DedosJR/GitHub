@@ -1,0 +1,90 @@
+/*  Variables and colors for global project */
+:root {
+  --black: #000000;
+  --gray: #333;
+  --white: #ffffff;
+  --green: #00c846;
+  --yellow: #f2db1d;
+}
+/* Desing body */
+body {
+  padding: auto;
+  margin: 0;
+}
+/* logo specs */
+.logo img {
+  padding: 5;
+  margin-top: 20px;
+  width: 350px;
+  height: 80px;
+}
+/*Nav bar especs*/
+.header {
+  background-color: var(--black);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: auto;
+}
+/*List especs*/
+/* Estilos generales del menú */
+nav {
+  background-color: transparent;
+  padding: 0;
+  height: 80px;
+}
+
+/* Estilo de los enlaces del menú */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  margin-top: -70px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  display: inline;
+  margin-left: 15px;
+}
+
+/* Estilo de los enlaces */
+nav ul li a {
+  text-decoration: none;
+  color: var(--black);
+  padding: 10px;
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+  align-content: center;
+}
+
+/* Cambiar color cuando el mouse pasa sobre el enlace */
+nav ul li a:hover {
+  background-color: var(--green);
+  border-radius: 10px;
+  transition: 0.5s;
+  transition-duration: 0.5s;
+}
+
+/* Menú adaptable para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .locutores img {
+    margin: auto;
+    align-content: center;
+  }
+  .title-name h {
+    color: var(--white);
+    font-size: 20px;
+    text-align: center;
+  }
+}

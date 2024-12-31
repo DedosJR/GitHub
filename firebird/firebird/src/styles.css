@@ -1,0 +1,186 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=FAMILY_NAME:wght@WEIGHT_OR_RANGE&display=swap');
+:root{
+  --Dark-grey:#333;
+  --grey:#5A5855;
+  --black: #000000;
+  --white: #ffffff;
+  --gold: #B8860B;
+  --red:#a33537;
+}
+
+body{
+  font-family: PT Serif;
+  margin: 0;
+  padding: 0;
+  /* background-image: url(https://img.freepik.com/vector-gratis/marca-ensayo-neumatico-sucio-fondo-oscuro-espacio-texto_1017-51294.jpg);
+  background-size: cover;  /* Ajusta la imagen para cubrir toda la pantalla */
+  background-position: center;
+  background-color: var(--white);
+}
+h1{
+  color: var(--Dark-grey);
+}
+h2{
+  color: var(--Dark-grey);
+  font-size: 2.5em;
+}
+p img{
+  width: 100%;
+  height: 450px;
+  padding: 5;
+  margin: 5;
+
+}
+img{
+  max-width: 100%; /* Asegura que la imagen no sobresalga del contenedor */
+  height: auto;
+  margin-bottom: 15px;
+;
+}
+p{
+  color: var(--grey);
+  font-size: 1.2em;
+}
+main{
+  margin: 3em;
+  padding: auto;
+}
+.car{
+  border: 1px solid #ddd;
+  background-color: var(--white);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  height: 400px;
+  transition: transform 0.5s ease;
+}
+.car:hover{
+  transform: translateY(20px);
+  /* transform: scale(1.01) rotate(5deg); */
+}
+.car-content{
+  text-align: center;
+}
+
+.box{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.title{
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.description{
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 10px;
+}
+/* Estilo para la barra de navegación */
+.navbar {
+  width: 100%;
+  background-color: var(--black);  /* Color de fondo */
+  padding: 5px;  /* Espaciado interno */
+  color: var(--black); /* Color del texto */
+
+}
+
+/* Contenedor de la navegación */
+.navbar-container {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre logo y menú */
+  align-items: center;            /* Alineación vertical centrada */
+  max-width: 1200px;              /* Ancho máximo del contenedor */
+  margin: 0 auto;                 /* Centrar horizontalmente */
+
+}
+
+/* Logo de la navegación */
+.navbar-logo {
+  font-size: 24px;  /* Tamaño del texto del logo */
+  color: var(--black);      /* Color del logo */
+  text-decoration: none;
+}
+
+/* Estilo del menú de navegación */
+.navbar-menu {
+  display: flex;         /* Alinear elementos en fila */
+  list-style: none;      /* Quitar el estilo de lista */
+  margin: 0;
+  padding: 0;
+
+}
+
+/* Estilo de cada ítem de la navegación */
+.navbar-item {
+  transform: 0.5s ease;
+  margin-left: 20px;  /* Espaciado entre cada ítem */
+}
+.navbar-item:hover {
+  transform: translateY(5px);
+
+}
+
+/* Estilo de los enlaces */
+.navbar-link {
+  color: var(--white);             /* Color del texto */
+  text-decoration: none;   /* Quitar el subrayado */
+  font-size: 20px;         /* Tamaño del texto */
+  transition: color 0.5s;  /* Transición para el hover */
+
+}
+
+/* Hover sobre los enlaces */
+.navbar-link:hover {
+  color: var(--gold); /* Color cuando el ratón pasa por encima */
+  border-bottom: solid 2px;
+}
+
+p{
+  color: var(--Dark-grey);
+}
+.Logo{
+  width: 120px;
+  height: 80px;
+  padding: auto;
+  margin: 5px;
+  object-fit: contain;
+}
+.portada img{
+  width: 100%;
+  height: 850px;
+}
+
+.categoria-a {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  opacity: 0; /* Oculta el elemento inicialmente */
+  transform: translateY(20px); /* Mueve el texto un poco hacia abajo para un efecto */
+  transition: opacity 1.5s ease, transform 1.5s ease; /* Transiciones suaves */
+}
+
+.categoria-a.visible {
+  opacity: 1; /* Aparece cuando entra al viewport */
+  transform: translateY(0); /* Se posiciona correctamente */
+}
+
+.categoria-a::after {
+  content: "";
+  flex-grow: 1;
+  height: 1px;
+  background-color: #000;
+  margin-left: 10px;
+  transform-origin: left;
+  transform: scaleX(0); /* Línea oculta inicialmente */
+  transition: transform 1.5s ease-in-out; /* Transición suave */
+}
+
+.categoria-a.visible::after {
+  transform: scaleX(1); /* Línea se expande al entrar al viewport */
+}

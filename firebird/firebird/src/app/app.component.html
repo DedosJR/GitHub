@@ -1,0 +1,74 @@
+<nav class="navbar">
+  <!-- Logotipo -->
+  <div class="navbar-container">
+    <div class="Logo">
+    <a  href="#" class="navbar-logo">
+      <img src="/assets/Logo.png" alt="Logotipo">
+    </a>
+    </div>
+    <!-- Navbar -->
+    <ul class="navbar-menu">
+      <li class="navbar-item"><a routerLink="/" class="navbar-link">Inicio</a></li>
+      <li class="navbar-item"><a routerLink="/servicios" class="navbar-link">Servicios</a></li>
+      <li class="navbar-item"><a routerLink="/acerca-de" class="navbar-link">Acerca de</a></li>
+      <li class="navbar-item"><a routerLink="/contacto" class="navbar-link">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+<Section>
+
+  <div class="portada">
+    <img src="/assets/Pontiac-Firebird-1.jpg" alt="">
+  </div>
+</Section>
+<main>
+<!-- Categoria de carros -->
+  <section>
+    <div class="categoria-a">
+      <h3>Honda</h3>
+    </div>
+  </section>
+@defer (on timer(800)) {
+  <div class="box">
+    @for (carro of carros; track carro.id) {
+  <div class="car">
+  <div class="car-content">
+ <h2 class="title">{{ carro.Title }}</h2>
+  <img [src]="'http://localhost:1337'+ carro.image.formats.small.url" alt="Imagen de un carro" loading="lazy"/>
+  <p class="description" [innerHTML]="carro.slug "></p>
+  </div>
+</div>
+}
+</div>
+}@placeholder {
+ Cargando contenido...
+}
+<!-- Categoria de carros2 -->
+<section>
+  <div class="categoria-a">
+    <h3>Honda</h3>
+  </div>
+</section>
+@defer (on timer(800)) {
+<div class="box">
+  @for (carro of carros; track carro.id) {
+<div class="car">
+<div class="car-content">
+<h2 class="title">{{ carro.Title }}</h2>
+<img [src]="'http://localhost:1337'+ carro.image.formats.small.url" alt="Imagen de un carro" loading="lazy"/>
+<p class="description" [innerHTML]="carro.slug "></p>
+</div>
+</div>
+}
+</div>
+}@placeholder {
+Cargando contenido...
+}
+<!-- Cotenido -->
+<article>
+  <p> Hola</p>
+  <p>Nosotros somos un grupo de personas que se dedicamos a la creación de aplicaciones web y software para la gestión de carros.</p>
+  <p>Te ofrecemos un servicio de gestión de carros, que incluye la gestión de los carros, la compra y la venta, así como la gestión de los servicios de mantenimiento y reparación.</p>
+</article>
+</main>
+<!-- <router-outlet></router-outlet> -->
