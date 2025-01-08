@@ -1,0 +1,7 @@
+{
+  "name": "maxiradiofm",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

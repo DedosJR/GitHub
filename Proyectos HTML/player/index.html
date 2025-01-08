@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/f01506bf38.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Player</title>
+    <style>
+      body {
+        margin: 20 auto 20;
+        padding: 0;
+        background-color: aqua;
+      }
+
+      #audio-player {
+        width: 100%;
+        background-color: #00000088;
+        padding: 20px;
+        margin: auto;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+      }
+
+      #cover-art {
+        width: 200px;
+        height: 200px;
+        max-width: 100px;
+        max-height: 100px;
+        background-image: url("https://server1.maxiradiofm.com/static/uploads/conexionfm/album_art.1707171680.jpg");
+        background-size: cover;
+        background-position: center;
+        margin-right: 20px; /* Ajuste de margen para separar la imagen de los controles */
+      }
+
+      #audio-controls {
+        display: flex;
+        align-items: center;
+        flex-grow: 1; /* Permite que los controles se expandan para llenar el espacio restante */
+      }
+
+      #play-button {
+        background-color: #db9834;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px; /* Ajuste de margen para separar los controles */
+      }
+
+      #volume-wrapper {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+      }
+
+      #volume-control {
+        flex-grow: 1;
+        margin-top: 10px; /* Espacio adicional entre el control de volumen y el botón de reproducción */
+      }
+
+      #volume-icon {
+        color: #ffffff;
+        background-color: #db9834;
+        border: none;
+        padding: 10px;
+        border-radius: 50%; /* Hace que el botón de volumen sea redondeado */
+        cursor: pointer;
+        margin-left: 10px; /* Espacio entre el control de volumen y el botón de volumen */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="audio-player">
+      <div id="cover-art"></div>
+      <div id="audio-controls">
+        <button id="play-button">
+          <i id="play-icon" class="fa fa-play"></i>
+        </button>
+        <div id="volume-wrapper">
+          <input
+            type="range"
+            id="volume-control"
+            min="0"
+            max="1"
+            step="0.1"
+            value="1"
+          />
+          <button id="volume-icon"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <audio
+        id="audio-element"
+        src="https://server1.maxiradiofm.com:8010/radio.mp3"
+        autoplay
+      ></audio>
+    </div>
+    <script>
+      const audio = document.getElementById("audio-element");
+      const playButton = document.getElementById("play-button");
+      const playIcon = document.getElementById("play-icon");
+      const volumeControl = document.getElementById("volume-control");
+      const volumeIcon = document.getElementById("volume-icon");
+
+      // Función para manejar el cambio de icono al inicio
+      function handlePlayIcon() {
+        if (audio.paused) {
+          playIcon.classList.remove("fa-pause");
+          playIcon.classList.add("fa-play");
+        } else {
+          playIcon.classList.remove("fa-play");
+          playIcon.classList.add("fa-pause");
+        }
+      }
+
+      // Manejador de eventos para el botón de reproducción
+      playButton.addEventListener("click", function () {
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+        handlePlayIcon(); // Actualizar el icono de reproducción
+      });
+
+      // Manejador de eventos para el control de volumen
+      volumeControl.addEventListener("input", function () {
+        audio.volume = volumeControl.value;
+        if (volumeControl.value == 0) {
+          volumeIcon.innerHTML = '<i class="fas fa-volume-off"></i>';
+        } else if (volumeControl.value < 0.5) {
+          volumeIcon.innerHTML = '<i class="fas fa-volume-down"></i>';
+        } else {
+          volumeIcon.innerHTML = '<i class="fas fa-volume-up"></i>';
+        }
+      });
+
+      // Manejador de eventos para cuando se inicia la reproducción
+      audio.addEventListener("play", function () {
+        handlePlayIcon(); // Actualizar el icono de reproducción
+      });
+
+      // Manejador de eventos para cuando se pausa la reproducción
+      audio.addEventListener("pause", function () {
+        handlePlayIcon(); // Actualizar el icono de reproducción
+      });
+
+      // Manejador de eventos para cuando el audio se ha cargado y está listo para reproducirse
+      audio.addEventListener("loadedmetadata", function () {
+        if (audio.autoplay) {
+          handlePlayIcon(); // Actualizar el icono de reproducción si se está reproduciendo automáticamente
+        }
+      });
+    </script>
+  </body>
+</html>
