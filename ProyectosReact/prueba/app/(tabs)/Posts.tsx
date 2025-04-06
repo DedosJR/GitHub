@@ -7,6 +7,9 @@ type Post = {
   title: {
     rendered: string;
   };
+  excerpt: {
+    rendered: string;
+  };
   content: {
     rendered: string;
   };
@@ -15,37 +18,66 @@ type Post = {
       source_url: string;
     }[];
   };
+  date: string;
 };
 
 const NewsScreen = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasMorePosts, setHasMorePosts] = useState(true);
   const router = useRouter();
 
-  const truncateText = (text: string, maxLength: number) => {
-    const plainText = text.replace(/<[^>]+>/g, ''); // Elimina etiquetas HTML
-    return plainText.length > maxLength
-      ? plainText.substring(0, maxLength) + '...'
-      : plainText;
+  const fetchPosts = async (pageNumber: number) => {
+    try {
+      const response = await fetch(`https://maxiradiofm.com/wp-json/wp/v2/posts?_embed&page=${pageNumber}&per_page=10`);
+      const data = await response.json();
+      
+      if (data.length === 0) {
+        setHasMorePosts(false);
+        return [];
+      }
+      return data;
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      return [];
+    }
+  };
+
+  const loadMorePosts = async () => {
+    if (isLoadingMore || !hasMorePosts) return;
+    
+    setIsLoadingMore(true);
+    const newPosts = await fetchPosts(page + 1);
+    setPage(page + 1);
+    setPosts([...posts, ...newPosts]);
+    setIsLoadingMore(false);
   };
 
   useEffect(() => {
-    fetch('https://maxiradiofm.com/wp-json/wp/v2/posts?_embed')
-      .then((response) => response.json())
-      .then((data) => {
-        setPosts(data);
-      })
-      .catch((error) => console.error('Error fetching posts:', error))
-      .finally(() => setIsLoading(false)); // Finaliza el estado de carga
+    const loadInitialPosts = async () => {
+      const initialPosts = await fetchPosts(1);
+      setPosts(initialPosts);
+      setIsLoading(false);
+    };
+    loadInitialPosts();
   }, []);
+
+  const renderFooter = () => {
+    if (!isLoadingMore) return null;
+    return (
+      <View style={styles.footer}>
+        <ActivityIndicator size="small" color="#333" />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      
       {isLoading ? (
         <ActivityIndicator size="large" color="#333" style={styles.loading} />
       ) : (
-        
         <FlatList
           data={posts}
           keyExtractor={(item) => item.id.toString()}
@@ -58,6 +90,7 @@ const NewsScreen = () => {
                     title: item.title.rendered,
                     content: item.content.rendered,
                     image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+                    date: item.date // Pasa la fecha como parámetro
                   },
                 })
               }
@@ -70,12 +103,20 @@ const NewsScreen = () => {
                   />
                 )}
                 <Text style={styles.title}>{item.title.rendered}</Text>
-                {/* <Text style={styles.excerpt}>
-                  {truncateText(item.content.rendered, 100)}
-                </Text> */}
+                
+                <Text style={styles.postDate}>
+                 {new Date(item.date).toLocaleDateString("es-ES", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric"
+                })}
+                 </Text>
               </View>
             </TouchableOpacity>
           )}
+          onEndReached={loadMorePosts}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={renderFooter}
         />
       )}
     </View>
@@ -111,11 +152,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
   },
   excerpt: {
+    fontSize: 14,
+    color: '#666',
+  },
+  footer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  postDate: {
     fontSize: 14,
     color: '#666',
   },

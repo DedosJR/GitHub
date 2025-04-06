@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, 
+  ActivityIndicator,Dimensions,
+} from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { decode } from 'html-entities';
+import RenderHtml from 'react-native-render-html';
+
 
 const PostDetail = () => {
   const params = useLocalSearchParams();
-  const { title, content, image } = params;
+  const { title, content, image,date} = params;
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,9 +27,21 @@ const PostDetail = () => {
       </View>
     );
   }
+    const post: {
+      title: string,
+      content: string,
+      image?: string,
+      date: string
+    } = {
+      title: title as string,
+      content: content as string,
+      image: image as string,
+      date: date as string || new Date().toISOString()// Si no hay fecha, usa la fecha actual
+    }
 
-  const myString: string = content as string;
-  const cleanedContent = myString.replace(/<[^>]+>/g, '');
+  // Obtén el ancho de la pantalla
+  const contentWidth = Dimensions.get('window').width - 30;
+
 
   return (
     <ScrollView style={styles.container}>
@@ -32,13 +49,31 @@ const PostDetail = () => {
         <ActivityIndicator size="large" color="#333" style={styles.loading} />
       ) : (
         <>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>{post.title.replace(/&#8211;/g, "_")}</Text>
+          <Text style={styles.date}>
+            {new Date(post.date).toLocaleDateString("es-ES", {
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            })}
+          </Text>
           {image && typeof image === 'string' ? (
             <Image source={{ uri: image }} style={styles.image} />
           ) : (
             <Text style={styles.noImageText}>No hay imagen disponible</Text>
           )}
-          <Text style={styles.content}>{cleanedContent}</Text>
+          
+          <View style={styles.htmlContent}>
+            <RenderHtml
+              contentWidth={contentWidth}
+              source={{ html: post.content }}
+              tagsStyles={{
+                p: styles.paragraph,
+                a: styles.link,
+                img: styles.contentImage,
+              }}
+            />
+          </View>
         </>
       )}
     </ScrollView>
@@ -58,10 +93,16 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   title: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 0,
     color: 'black',
+  },
+  date: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 10,
+    marginTop: 10,
   },
   image: {
     width: '100%',
@@ -79,6 +120,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     color: 'black',
+    marginBottom: 40,
+    letterSpacing: 0.5,
+    
   },
   errorContainer: {
     flex: 1,
@@ -88,8 +132,29 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 18,
-    color: '#d9534f',
+    color: 'black',
     textAlign: 'center',
+  },
+  htmlContent: {
+    marginTop: 10,
+    marginBottom: 40,
+    letterSpacing: 0.5,
+    //paddingHorizontal: 10,
+  },
+  paragraph: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: 'black',
+    marginBottom: 10,
+  },
+  link: {
+    color: '#1e3c72',
+    textDecorationLine: 'underline',
+  },
+  contentImage: {
+    width: '100%',
+    height: 'auto',
+    marginVertical: 10,
   },
 });
 
