@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useRouter } from 'expo-router';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import { useRouter } from "expo-router";
 
 type Post = {
   id: number;
@@ -14,7 +22,7 @@ type Post = {
     rendered: string;
   };
   _embedded?: {
-    'wp:featuredmedia'?: {
+    "wp:featuredmedia"?: {
       source_url: string;
     }[];
   };
@@ -31,23 +39,25 @@ const NewsScreen = () => {
 
   const fetchPosts = async (pageNumber: number) => {
     try {
-      const response = await fetch(`https://maxiradiofm.com/wp-json/wp/v2/posts?_embed&page=${pageNumber}&per_page=10`);
+      const response = await fetch(
+        `https://maxiradiofm.com/wp-json/wp/v2/posts?_embed&page=${pageNumber}&per_page=10`
+      );
       const data = await response.json();
-      
+
       if (data.length === 0) {
         setHasMorePosts(false);
         return [];
       }
       return data;
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      console.error("Error fetching posts:", error);
       return [];
     }
   };
 
   const loadMorePosts = async () => {
     if (isLoadingMore || !hasMorePosts) return;
-    
+
     setIsLoadingMore(true);
     const newPosts = await fetchPosts(page + 1);
     setPage(page + 1);
@@ -68,7 +78,7 @@ const NewsScreen = () => {
     if (!isLoadingMore) return null;
     return (
       <View style={styles.footer}>
-        <ActivityIndicator size="small" color="#333" />
+        <ActivityIndicator size="large" color="#ffcc00" />
       </View>
     );
   };
@@ -76,7 +86,11 @@ const NewsScreen = () => {
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#333" style={styles.loading} />
+        <ActivityIndicator
+          size="large"
+          color="#ffcc00"
+          style={styles.loading}
+        />
       ) : (
         <FlatList
           data={posts}
@@ -85,32 +99,36 @@ const NewsScreen = () => {
             <TouchableOpacity
               onPress={() =>
                 router.push({
-                  pathname: '/Noticias',
+                  pathname: "/Noticias",
                   params: {
                     title: item.title.rendered,
                     content: item.content.rendered,
-                    image: item._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-                    date: item.date // Pasa la fecha como parámetro
+                    image:
+                      item._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                      "",
+                    date: item.date, // Pasa la fecha como parámetro
                   },
                 })
               }
             >
               <View style={styles.postContainer}>
-                {item._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
+                {item._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
                   <Image
-                    source={{ uri: item._embedded['wp:featuredmedia'][0].source_url }}
+                    source={{
+                      uri: item._embedded["wp:featuredmedia"][0].source_url,
+                    }}
                     style={styles.image}
                   />
                 )}
                 <Text style={styles.title}>{item.title.rendered}</Text>
-                
+
                 <Text style={styles.postDate}>
-                 {new Date(item.date).toLocaleDateString("es-ES", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric"
-                })}
-                 </Text>
+                  {new Date(item.date).toLocaleDateString("es-ES", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </Text>
               </View>
             </TouchableOpacity>
           )}
@@ -126,48 +144,50 @@ const NewsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
     padding: 10,
+    height: "100%",
   },
   loading: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 50,
   },
   postContainer: {
     marginBottom: 10,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 5,
     elevation: 3,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
     borderRadius: 5,
     marginBottom: 10,
   },
   title: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   excerpt: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
   footer: {
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   postDate: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
 });
 

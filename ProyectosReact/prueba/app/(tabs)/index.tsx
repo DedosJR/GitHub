@@ -6,13 +6,18 @@ import {
   ScrollView,
   Dimensions,
   FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
+import Carousel from "react-native-snap-carousel";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import NewsCarousel from "../../Components/NewsCarousel";
 
 /**Componente que muestra una tarjeta de locutor..*/
-const { width } = Dimensions.get("window");
+const { width, width: screenWidth } = Dimensions.get("window");
+
 const locutores = [
   {
     id: "1",
@@ -41,7 +46,7 @@ const LocutoresCard = ({
   );
 };
 /**Fin de componente que muestra una tarjeta de locutor..*/
-export default function Tab() {
+const Tab = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -49,7 +54,6 @@ export default function Tab() {
           source={require("../../assets/Header.jpg")}
           style={styles.image}
         />
-
         <Text style={styles.title}>
           <MaterialIcons name="calendar-today" size={20} color="black" />{" "}
           Programación
@@ -62,13 +66,18 @@ export default function Tab() {
           renderItem={({ item }) => <LocutoresCard locutor={item} />}
         />
       </View>
-
+      {/**Seccion de noticias espectáculos */}
       <Text style={styles.title}>
         <MaterialIcons name="newspaper" size={20} color="black" /> Tendencia
       </Text>
+      <NewsCarousel />
+      {/**Seccion de podcast */}
+      <Text style={styles.title}>
+        <MaterialIcons name="podcasts" size={20} color="black" /> Podcast
+      </Text>
     </ScrollView>
   );
-}
+};
 /**CSS de componentes*/
 const styles = StyleSheet.create({
   container: {
@@ -119,3 +128,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+export default Tab;

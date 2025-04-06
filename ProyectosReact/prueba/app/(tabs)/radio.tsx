@@ -78,7 +78,7 @@ const RadioScreen = () => {
   return (
     <View style={styles.container}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#333" />
+        <ActivityIndicator size="large" color="#ffcc00" />
       ) : (
         <View>
           <Image source={{ uri: songDetails.artUrl }} style={styles.image} />
@@ -91,7 +91,7 @@ const RadioScreen = () => {
         onPress={isPlaying ? stopStream : playStream}
       >
         <Ionicons
-          name={isPlaying ? "stop-circle" : "play-circle" }
+          name={isPlaying ? "stop-circle" : "play-circle"}
           size={40}
           color="white"
         />
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     top: 0,
     backgroundColor: "#f2f3f4",
     height: "100%",
+    flex: 1,
   },
   image: {
     width: 300,
@@ -137,6 +138,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 40,
     marginTop: 20,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 50,
   },
 });
 export default RadioScreen;

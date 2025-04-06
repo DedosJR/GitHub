@@ -5,8 +5,8 @@ import {
   Dimensions,
   Text,
   StyleSheet,
+  FlatList,
 } from "react-native";
-import Carousel from "react-native-snap-carousel";
 import { getNewsCategory } from "../Services/wpApi";
 import NewsCard from "./NewsCard";
 
@@ -40,7 +40,7 @@ const NewsCarousel = () => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#ffcc00" />
       </View>
     );
   }
@@ -63,14 +63,16 @@ const NewsCarousel = () => {
 
   return (
     <View style={styles.carouselContainer}>
-      <Carousel
+      <FlatList
         data={news.slice(0, 5)}
-        renderItem={({ item }) => <NewsCard noticia={item} />}
-        sliderWidth={Dimensions.get("window").width}
-        itemWidth={250}
-        inactiveSlideOpacity={0.7}
-        autoplay={true}
-        autoplayInterval={5000}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <View style={styles.itemContainer}>
+            <NewsCard noticia={item} />
+          </View>
+        )}
       />
     </View>
   );
@@ -96,8 +98,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   carouselContainer: {
-    height: 300,
+    height: "auto",
     marginVertical: 20,
+  },
+  itemContainer: {
+    width: 250,
+    marginRight: 15,
   },
 });
 
