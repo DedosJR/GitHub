@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Python Web App</title>
+</head>
+<body>
+    <h1>Posts from API</h1>
+    <div class="posts">
+        {% for post in posts %}
+            <div class="post">
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.body }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+
+<style>
+    .posts {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .post {
+        width: 300px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+   .post h2 {
+        margin-top: 0;
+    }
+
+   .post p {
+        margin-bottom: 0;
+    }
+</style>
+</html>
