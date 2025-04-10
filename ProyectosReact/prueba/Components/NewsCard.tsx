@@ -1,14 +1,16 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Noticia } from "../app/types/wpTypes";
-
+import { Noticia } from "../types/wpTypes";
+import { RootStackParamList } from "../types/navigation";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 type Props = {
   noticia: Noticia;
 };
 
 const NewsCard = ({ noticia }: Props) => {
-  const navigation = useNavigation();
+
+const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const handlePress = () => {
     navigation.navigate("Noticias", {

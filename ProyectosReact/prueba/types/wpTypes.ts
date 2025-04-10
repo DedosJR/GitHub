@@ -1,4 +1,4 @@
-export interface Noticia {
+export type Noticia = {
   id: number;
   title: {
     rendered: string;
@@ -12,11 +12,11 @@ export interface Noticia {
       source_url: string;
     }>;
   };
-}
-export interface Post {
+};
+export type Post = {
   id: number;
   title: string;
   content: string;
   date: string;
   image?: string;
-}
+};

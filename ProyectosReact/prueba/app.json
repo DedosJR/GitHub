@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "prueba",
+    "name": "MaxiRadioFM",
     "slug": "maxiradiofm",
     "platforms": ["ios", "android", "web"],
     "description": "La mejor radio música esta en MaxiRadioFM desde Tijuana Baja California México",
@@ -16,7 +16,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "y",
+      "bundleIdentifier": "com.dedos_dev.maxiradiofm",
+      "buildNumber": "1.0.0",
       "infoPlist": {
         "UIBackgroundModes": ["audio"],
         "ITSAppUsesNonExemptEncryption": false
@@ -25,6 +26,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon-512x512-logo.png",
+        "bundleIdentifier": "com.dedos_dev.maxiradiofm",
         "backgroundColor": "#ffffff",
         "permissions": ["FOREGORUND_SERVICE"],
         "config": {
@@ -46,7 +48,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "3a25a70a-a37d-4e49-b324-4db577dd3225"
+        "projectId": "ee539149-8d7f-4001-8c02-e1fbaed20633"
       }
     },
     "owner": "dedos_dev"

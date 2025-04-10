@@ -54,6 +54,18 @@ const Tab = () => {
           source={require("../../assets/Header.jpg")}
           style={styles.image}
         />
+        {/**Seccion de publicidad */}
+        <View style={styles.bannercontainer}>
+          <TouchableOpacity>
+            <Image
+              source={{
+                uri: "https://maxiradiofm.com/banners/Banner-728.webp",
+              }}
+              style={styles.banners}
+            />
+          </TouchableOpacity>
+        </View>
+        {/**Seccion de locutores */}
         <Text style={styles.title}>
           <MaterialIcons name="calendar-today" size={20} color="black" />{" "}
           Programación
@@ -126,6 +138,19 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 12,
     fontWeight: "bold",
+  },
+  banners: {
+    width: 400,
+    height: 40,
+    marginTop: 15,
+    marginBottom: 10,
+    alignSelf: "center",
+  },
+  bannercontainer: {
+    width: "100%",
+    height: 40,
+    marginTop: 15,
+    marginBottom: 10,
   },
 });
 export default Tab;
